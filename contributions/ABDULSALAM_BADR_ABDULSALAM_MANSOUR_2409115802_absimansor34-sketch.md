@@ -4,14 +4,13 @@
 
 ## My Contributions
 
-### Documentation
-*   Wrote `README.md`: the problem the project solves, the repository structure, usage of every command, the data format, the validation rules and how to run the tests.
-*   Wrote the `--help` texts of every command and argument.
-
-### Code: Budget and Reports (`shopping_list.py`)
-*   `set_budget()` and `load_budget()`: saving and reading the budget (a damaged budget file is ignored with a warning).
-*   `calculate_totals()`: cost per section and grand total.
-*   `show_total()` and `show_list()`: the formatted output tables and the over / within budget message.
+### Documentation (`README.md`)
+*   The problem the project solves and why grouping by store section and tracking a budget helps.
+*   The repository structure, with the purpose of every file and folder.
+*   Usage of every command in Direct Mode (`add`, `remove`, `list`, `total`, `budget`) with examples, and an example Interactive Mode session.
+*   The data file format (`name|quantity|price`).
+*   The input validation rules and the protections against malicious input.
+*   How to run the tests, the topics demonstrated (W01–W03), and the team table.
 
 ## Topics I Worked With
-F-Strings with alignment and number formatting, dictionaries, `for` loops, File I/O, functions with multiple returns.
+Markdown documentation, explaining `argparse` commands and arguments, describing input validation and file storage.
