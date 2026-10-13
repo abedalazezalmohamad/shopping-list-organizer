@@ -345,6 +345,7 @@ def build_parser():
     """
     parser = argparse.ArgumentParser(
         description="Shopping List Organizer: plan your shopping by store section and stay within your budget.",
+        epilog="Run without a command to start Interactive Mode.",
     )
     commands = parser.add_subparsers(dest="command")
 
@@ -436,6 +437,66 @@ def run_command(args):
     return 0 if success else 1
 
 
+# ---------------------------------------------------------------------------
+# Interactive mode
+# ---------------------------------------------------------------------------
+
+# W03-B1: Functions
+def ask(prompt, validator):
+    """
+    Keeps asking the same question until the answer passes the validator.
+    W03-B2: input()
+    W02: while loops
+    """
+    while True:
+        value, error = validator(input(prompt))
+        if error is None:
+            return value
+        print(f"Error: {error}")
+
+
+# W03-B1: Functions
+def run_interactive():
+    """
+    Menu-driven mode for adding, removing and reviewing items in one session.
+    """
+    sections_hint = ", ".join(SECTION_FILES)
+    menu = "\n1) Add item   2) Remove item   3) Show list   4) Show total   5) Set budget   6) Exit"
+
+    print("\n--- Shopping List Interactive Mode ---")
+
+    # W02: while loops
+    while True:
+        print(menu)
+        choice = input("Choose an option (1-6): ").strip()
+
+        if choice == "1":
+            item = ask("Item name: ", validate_item)
+            quantity = ask("Quantity: ", validate_quantity)
+            price = ask("Price of one unit: ", lambda text: validate_amount(text, "Price", MAX_PRICE))
+            section = ask(f"Section ({sections_hint}): ", validate_section)
+            success, message = add_item(item, quantity, price, section)
+            print(message)
+        elif choice == "2":
+            item = ask("Item name to remove: ", validate_item)
+            section = ask(f"Section ({sections_hint}): ", validate_section)
+            success, message = remove_item(item, section)
+            print(message)
+        elif choice == "3":
+            show_list()
+        elif choice == "4":
+            show_total()
+        elif choice == "5":
+            amount = ask("Budget amount: ", lambda text: validate_amount(text, "Budget", MAX_BUDGET))
+            success, message = set_budget(amount)
+            print(message)
+        elif choice == "6" or choice.lower() == "exit":
+            print("Exiting Shopping List.")
+            return 0
+        else:
+            print("Error: Please choose a number from 1 to 6.")
+
+
 # W03-B1: Functions
 def main():
     """
@@ -445,14 +506,17 @@ def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-    parser = build_parser()
-    args = parser.parse_args()
+    args = build_parser().parse_args()
 
     try:
+        # Mode 1: Direct (with a command)   Mode 2: Interactive (no command)
         if args.command is None:
-            parser.print_help()
-            return 0
+            return run_interactive()
         return run_command(args)
+    except (KeyboardInterrupt, EOFError):
+        # Ctrl+C or Ctrl+Z / Ctrl+D: exit cleanly instead of showing a crash
+        print("\nExiting Shopping List.")
+        return 0
     except OSError as error:
         # File errors (e.g., no permission to write)
         print(f"ERROR: Could not access the shopping list files. Details: {error}")
