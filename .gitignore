@@ -1,0 +1,6 @@
+# Data files created when the program runs
+*_list.txt
+budget.txt
+
+# Python cache
+__pycache__/
