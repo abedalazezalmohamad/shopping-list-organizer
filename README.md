@@ -148,9 +148,9 @@ python -m unittest discover -s tests -v
 
 | Name | Student ID | Role |
 |---|---|---|
-| Abed Alazez Al Mohamad | 2309116389 | Presenter |
+| Abed Alazez Al Mohamad | 2309116389 | Presenter, Testing & QA |
 | Ahmed Altaha | 2409115853 | Lead Developer |
-| Ahmed Rakha | 2409115172 | Testing & QA |
+| Ahmed Rakha | 2409115172 | Team Member |
 | Abdulsalam Badr Abdulsalam Mansour | 2409115802 | Documentation |
 
 See the `contributions/` folder for each member's details.
