@@ -1,0 +1,6 @@
+# Data files created when the program runs
+watchlist.json
+alerts.log
+
+# Python cache
+__pycache__/
